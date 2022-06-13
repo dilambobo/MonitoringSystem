@@ -8,8 +8,7 @@ public class SystemDirector {
         super();
         this.systemBuilder = systemBuilder;
         if (this.systemBuilder == null) {
-            System.out.println("ll");
- //           throw new IllegalArgumentException("smth wrong");
+            throw new IllegalArgumentException("smth wrong with SystemDirector");
         }
     }
 

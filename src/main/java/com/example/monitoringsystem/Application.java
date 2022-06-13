@@ -1,9 +1,5 @@
 package com.example.monitoringsystem;
 
-import com.example.monitoringsystem.System.BoilerSystemBuilder;
-import com.example.monitoringsystem.System.Systemm;
-import com.example.monitoringsystem.System.SystemBuilder;
-import com.example.monitoringsystem.System.SystemDirector;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
