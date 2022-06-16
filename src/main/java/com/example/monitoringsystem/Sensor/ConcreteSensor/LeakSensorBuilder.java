@@ -3,15 +3,15 @@ package com.example.monitoringsystem.Sensor.ConcreteSensor;
 import com.example.monitoringsystem.Sensor.Sensor;
 import com.example.monitoringsystem.Sensor.SensorBuilder;
 
-public class PressureSensorBuilder implements SensorBuilder {
+public class LeakSensorBuilder implements SensorBuilder {
 
-     private String sensorName;
-     private boolean operationAbility;
-     double measurement;
+    private String sensorName;
+    private boolean operationAbility;
+    double measurement;
 
     @Override
     public SensorBuilder fixSensorName() {
-        this.sensorName = "Датчик давления";
+        this.sensorName = "Датчик утечки";
         return this;
     }
 

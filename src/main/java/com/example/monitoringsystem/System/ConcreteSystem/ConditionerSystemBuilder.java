@@ -1,6 +1,7 @@
 package com.example.monitoringsystem.System.ConcreteSystem;
 
 import com.example.monitoringsystem.Sensor.Sensor;
+import com.example.monitoringsystem.System.SensorCreating.SensorCreator;
 import com.example.monitoringsystem.System.SystemBuilder;
 import com.example.monitoringsystem.System.Systemm;
 
@@ -19,7 +20,8 @@ public class ConditionerSystemBuilder implements SystemBuilder{
 
     @Override
     public SystemBuilder fixSensors() {
-        // здесь должно быть создание сенсоров (определенных)
+        SensorCreator sensorCreator = new SensorCreator();
+        sensors = sensorCreator.createConditionerSystemSensors();
         this.sensors = sensors;
         return this;
     }

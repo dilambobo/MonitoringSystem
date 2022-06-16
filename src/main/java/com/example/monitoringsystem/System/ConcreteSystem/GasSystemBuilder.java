@@ -1,12 +1,13 @@
 package com.example.monitoringsystem.System.ConcreteSystem;
 
 import com.example.monitoringsystem.Sensor.Sensor;
+import com.example.monitoringsystem.System.SensorCreating.SensorCreator;
 import com.example.monitoringsystem.System.SystemBuilder;
 import com.example.monitoringsystem.System.Systemm;
 
 import java.util.ArrayList;
 
-public class GasSystemBuilderBuilder implements SystemBuilder {
+public class GasSystemBuilder implements SystemBuilder {
 
     private String SystemName;
     private ArrayList<Sensor> sensors;
@@ -19,7 +20,8 @@ public class GasSystemBuilderBuilder implements SystemBuilder {
 
     @Override
     public SystemBuilder fixSensors() {
-        // здесь должно быть создание сенсоров (определенных)
+        SensorCreator sensorCreator = new SensorCreator();
+        sensors = sensorCreator.createGasSystemSensors();
         this.sensors = sensors;
         return this;
     }
