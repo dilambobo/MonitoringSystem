@@ -6,6 +6,7 @@ module com.example.monitoringsystem {
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
     requires javafx.graphics;
+    requires org.apache.poi.ooxml;
 
     opens com.example.monitoringsystem to javafx.fxml;
     exports com.example.monitoringsystem;

@@ -3,6 +3,7 @@ package com.example.monitoringsystem.Sensor.ConcreteSensor;
 import com.example.monitoringsystem.Sensor.Sensor;
 import com.example.monitoringsystem.Sensor.SensorBuilder;
 
+// а я не используюсь!!
 public class CurrentSensorBuilder implements SensorBuilder {
 
     private String sensorName;
@@ -24,8 +25,8 @@ public class CurrentSensorBuilder implements SensorBuilder {
 
     @Override
     public SensorBuilder fixMeasurement() {
+
         this.measurement = measurement;
-        // здесь генерация значений измерений
         return this;
     }
 

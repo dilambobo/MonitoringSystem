@@ -1,33 +1,48 @@
 package com.example.monitoringsystem;
 
+import com.example.monitoringsystem.Report.DataSaver;
 import com.example.monitoringsystem.Sensor.Sensor;
 import com.example.monitoringsystem.System.ConcreteSystem.*;
 import com.example.monitoringsystem.System.Systemm;
 import com.example.monitoringsystem.System.SystemBuilder;
 import com.example.monitoringsystem.System.SystemDirector;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.stage.FileChooser;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainController {
 
     ArrayList<Systemm> systems = new ArrayList<>();
+    DataSaver dataSaver = new DataSaver();
 
     @FXML
     private Label systemStatusLabel;
 
     @FXML
+    private Button getDataButton;
+
+    @FXML
     private TreeView tree;
 
-    @FXML
-    public void getMeasurements(){}
+    @FXML // здесь нужно добавить окошко "отчет сохранен"
+    public void saveDataReport(){
+        FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(null);
+        try {
+            dataSaver.saveReport(systems, file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-    @FXML
-    public void saveDataReport(){}
-
+    // функция для теста
     public void test(){
         SystemBuilder systemBuilder = new GasSystemBuilder();
         SystemDirector systemDirector = new SystemDirector(systemBuilder);
@@ -37,13 +52,14 @@ public class MainController {
         }
     }
 
-    // заполнение дерева
-    public void showTree() {
+    @FXML
+    public void getMeasurements() {
         SystemsBaseCreating();
         createTree();
+        getDataButton.setDisable(true);
     }
 
-    // создание дерева  !! не забыть задизейблить кнопку после нажатия"
+    // создание дерева
     public void createTree() {
 
         TreeItem<String> rootItem = new TreeItem<>("Системы");
@@ -55,16 +71,15 @@ public class MainController {
 
             for (Sensor sensor : systemm.getSensors()) {
                 TreeItem<String> sensorItem = new TreeItem<>(sensor.getSensorName());
-                systemItem.getChildren().add(sensorItem); // пока тут нулы))) и какого хуя кстати
+                systemItem.getChildren().add(sensorItem);
+
+                TreeItem<String> operationAbilityLeaf = new TreeItem<>("Исправность : " + sensor.isOperationAbility());
+                sensorItem.getChildren().add(operationAbilityLeaf);
+
+                TreeItem<String> measurementLeaf = new TreeItem<>("Показания : " + sensor.getMeasurement());
+                sensorItem.getChildren().add(measurementLeaf);
             }
-
-//            systemm.getSensors().forEach((obj) -> {
-//                Sensor sensor = (Sensor) obj;
-//                TreeItem<String> sensorItem = new TreeItem<>(sensor.getSensorName());
-//                systemItem.getChildren().add(sensorItem);
-//            });
         }
-
         tree.setRoot(rootItem);
     }
 

@@ -25,7 +25,7 @@ public class GasLeakSensorBuilder implements SensorBuilder {
     @Override
     public SensorBuilder fixMeasurement() {
         this.measurement = measurement;
-        // здесь генерация значений измерений
+        // для этого датчика это значение должно быть null
         return this;
     }
 

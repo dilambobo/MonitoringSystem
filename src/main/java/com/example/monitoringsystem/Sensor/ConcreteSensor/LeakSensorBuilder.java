@@ -25,7 +25,7 @@ public class LeakSensorBuilder implements SensorBuilder {
     @Override
     public SensorBuilder fixMeasurement() {
         this.measurement = measurement;
-        // здесь генерация значений измерений
+        // должно быть null
         return this;
     }
 

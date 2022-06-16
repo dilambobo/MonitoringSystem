@@ -3,6 +3,7 @@ package com.example.monitoringsystem.Sensor.ConcreteSensor;
 import com.example.monitoringsystem.Sensor.Sensor;
 import com.example.monitoringsystem.Sensor.SensorBuilder;
 
+// я тоже не используюсь
 public class WaterSensorBuilder implements SensorBuilder {
 
     private String sensorName;

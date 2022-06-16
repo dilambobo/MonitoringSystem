@@ -10,11 +10,12 @@
         <TreeView fx:id="tree" layoutX="34.0" layoutY="34.0" prefHeight="383.0" prefWidth="364.0" />
         <Button fx:id="getDataButton" layoutX="418.0" layoutY="54.0"
                 mnemonicParsing="false"
-                onAction="#showTree"
+                onAction="#getMeasurements"
                 prefHeight="35.0" prefWidth="188.0" text="Получить данные" />
         <Button fx:id="saveDataButton" layoutX="418.0" layoutY="122.0"
                 mnemonicParsing="false" prefHeight="35.0"
-                prefWidth="188.0" text="Сохранить отчет" />
+                prefWidth="188.0" text="Сохранить отчет"
+                onAction="#saveDataReport"/>
         <Label fx:id="systemStatusLabel" layoutX="70.0" layoutY="437.0" prefHeight="35.0" prefWidth="292.0" />
       <Button layoutX="485.0" layoutY="238.0" mnemonicParsing="false" text="Button" onAction="#test" />
     </children>
