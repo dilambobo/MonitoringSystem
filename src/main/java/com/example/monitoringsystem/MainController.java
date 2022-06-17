@@ -20,7 +20,7 @@ public class MainController {
     ArrayList<Systemm> systems = new ArrayList<>();
     DataSaver dataSaver = new DataSaver();
     Checker checker = new Checker();
-    String path = "";
+    String path = "/Users/dazorina/Documents/private/асус не умирай/Склеп для мониторинга/Внештатная ситуация.xlsx";
 
     @FXML
     private Label systemStatusLabel;
@@ -96,7 +96,7 @@ public class MainController {
         ArrayList<Sensor> badSensors1;
         badSensors1 = checker.checkOperationAbility(gasSystem.getSensors());
         if (badSensors1 != null) {
-            alert(badSensors1.toString());
+            if (!badSensors1.toString().equals("[]")) {alert(gasSystem.getSystemName() + badSensors1.toString());}
             File file = new File(path);
             try {
                 dataSaver.saveReport(systems, file);
@@ -116,7 +116,7 @@ public class MainController {
         ArrayList<Sensor> badSensors2;
         badSensors2 = checker.checkOperationAbility(boilerSystem.getSensors());
         if (badSensors2 != null) {
-            alert(badSensors2.toString());
+            if (!badSensors1.toString().equals("[]")) {alert(boilerSystem.getSystemName() + badSensors1.toString());}
             File file = new File(path);
             try {
                 dataSaver.saveReport(systems, file);
@@ -136,7 +136,7 @@ public class MainController {
         ArrayList<Sensor> badSensors3;
         badSensors3 = checker.checkOperationAbility(pumpSystem.getSensors());
         if (badSensors3 != null) {
-            alert(badSensors3.toString());
+            if (!badSensors3.toString().equals("[]")) {alert(pumpSystem.getSystemName() + badSensors3.toString());}
             File file = new File(path);
             try {
                 dataSaver.saveReport(systems, file);
@@ -156,7 +156,7 @@ public class MainController {
         ArrayList<Sensor> badSensors4;
         badSensors4 = checker.checkOperationAbility(conditionerSystem.getSensors());
         if (badSensors4 != null) {
-            alert(badSensors4.toString());
+            if (!badSensors4.toString().equals("[]")) {alert(conditionerSystem.getSystemName() + badSensors4.toString());}
             File file = new File(path);
             try {
                 dataSaver.saveReport(systems, file);
@@ -176,7 +176,7 @@ public class MainController {
         ArrayList<Sensor> badSensors5;
         badSensors5 = checker.checkOperationAbility(transformationSystem.getSensors());
         if (badSensors5 != null) {
-            alert(badSensors5.toString());
+            if (!badSensors5.toString().equals("[]")) {alert(transformationSystem.getSystemName() + badSensors5.toString());}
             File file = new File(path);
             try {
                 dataSaver.saveReport(systems, file);
@@ -196,7 +196,7 @@ public class MainController {
         ArrayList<Sensor> badSensors6;
         badSensors6 = checker.checkOperationAbility(heatingSystem.getSensors());
         if (badSensors6 != null) {
-            alert(badSensors6.toString());
+            if (!badSensors6.toString().equals("")) {alert(badSensors6.toString());}
             File file = new File(path);
             try {
                 dataSaver.saveReport(systems, file);

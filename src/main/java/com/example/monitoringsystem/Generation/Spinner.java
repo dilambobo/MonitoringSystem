@@ -22,7 +22,7 @@ public class Spinner {
 //            e.printStackTrace();
 //            return normalMeasurement;
 //        }
-        double a = normalMeasurement*0.2;
+        double a = normalMeasurement*0.1;
         if (Math.random() > 0.5 ) {
             return normalMeasurement + (Math.random() * a);
         }
