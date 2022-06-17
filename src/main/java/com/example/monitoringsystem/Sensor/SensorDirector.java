@@ -1,5 +1,7 @@
 package com.example.monitoringsystem.Sensor;
 
+import java.util.ArrayList;
+
 public class SensorDirector {
 
     private SensorBuilder sensorBuilder;
@@ -15,4 +17,5 @@ public class SensorDirector {
     public Sensor manufactureSensor() {
         return sensorBuilder.fixSensorName().fixMeasurement().fixOperationAbility().build();
     }
+
 }

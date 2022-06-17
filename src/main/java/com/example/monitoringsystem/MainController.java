@@ -1,8 +1,12 @@
 package com.example.monitoringsystem;
 
 import com.example.monitoringsystem.Report.DataSaver;
+import com.example.monitoringsystem.Sensor.ConcreteSensor.*;
+import com.example.monitoringsystem.Sensor.Control.Adder;
 import com.example.monitoringsystem.Sensor.Control.Checker;
 import com.example.monitoringsystem.Sensor.Sensor;
+import com.example.monitoringsystem.Sensor.SensorBuilder;
+import com.example.monitoringsystem.Sensor.SensorDirector;
 import com.example.monitoringsystem.System.ConcreteSystem.*;
 import com.example.monitoringsystem.System.Systemm;
 import com.example.monitoringsystem.System.SystemBuilder;
@@ -20,6 +24,7 @@ public class MainController {
     ArrayList<Systemm> systems = new ArrayList<>();
     DataSaver dataSaver = new DataSaver();
     Checker checker = new Checker();
+    Adder adder = new Adder();
     String path = "/Users/dazorina/Documents/private/асус не умирай/Склеп для мониторинга/Внештатная ситуация.xlsx";
 
     @FXML
@@ -31,7 +36,34 @@ public class MainController {
     @FXML
     private TreeView tree;
 
-    @FXML // здесь нужно добавить окошко "отчет сохранен"
+    @FXML
+    private Button updateDataButton;
+
+    @FXML
+    private TextField systemNameTextField;
+
+    @FXML
+    private CheckBox gasCheckBox;
+
+    @FXML
+    private CheckBox energyCheckBox;
+
+    @FXML
+    private CheckBox pressureCheckBox;
+
+    @FXML
+    private CheckBox vibrationCheckBox;
+
+    @FXML
+    private CheckBox humidityCheckBox;
+
+    @FXML
+    private CheckBox noiseCheckBox;
+
+    @FXML
+    private CheckBox temperatureCheckBox;
+
+    @FXML
     public void saveDataReport(){
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(null);
@@ -40,16 +72,7 @@ public class MainController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    // функция для теста
-    public void test(){
-        SystemBuilder systemBuilder = new GasSystemBuilder();
-        SystemDirector systemDirector = new SystemDirector(systemBuilder);
-        Systemm system = systemDirector.manufactureSystem();
-        if (system != null) {
-            systemStatusLabel.setText(system.getSystemName() + system.getSystemOk() + system.getSensors().toString());
-        }
+        alert("Отчет сохранен");
     }
 
     @FXML
@@ -57,6 +80,65 @@ public class MainController {
         SystemsBaseCreating();
         createTree();
         getDataButton.setDisable(true);
+    }
+
+    @FXML
+    public void updateMeasurements() {
+        systems = adder.updateMeasurements(systems);
+        createTree();
+    }
+
+    @FXML
+    public void addSystem() {
+        Systemm systemm = new Systemm(systemNameTextField.getText());
+        ArrayList<Sensor> newSystemSensors = new  ArrayList<Sensor>();
+
+        if (gasCheckBox.isSelected()) {
+            SensorBuilder sensorBuilder = new GasSensorBuilder();
+            SensorDirector sensorDirector = new SensorDirector(sensorBuilder);
+            Sensor sensor = sensorDirector.manufactureSensor();
+            newSystemSensors.add(sensor);
+        }
+        if (energyCheckBox.isSelected()) {
+            SensorBuilder sensorBuilder = new EnergyConsumptionSensorBuilder();
+            SensorDirector sensorDirector = new SensorDirector(sensorBuilder);
+            Sensor sensor = sensorDirector.manufactureSensor();
+            newSystemSensors.add(sensor);
+        }
+        if (pressureCheckBox.isSelected()) {
+            SensorBuilder sensorBuilder = new PressureSensorBuilder();
+            SensorDirector sensorDirector = new SensorDirector(sensorBuilder);
+            Sensor sensor = sensorDirector.manufactureSensor();
+            newSystemSensors.add(sensor);
+        }
+        if (vibrationCheckBox.isSelected()) {
+            SensorBuilder sensorBuilder = new VibrationSensorBuilder();
+            SensorDirector sensorDirector = new SensorDirector(sensorBuilder);
+            Sensor sensor = sensorDirector.manufactureSensor();
+            newSystemSensors.add(sensor);
+        }
+        if (humidityCheckBox.isSelected()) {
+            SensorBuilder sensorBuilder = new HumiditySensorBuilder();
+            SensorDirector sensorDirector = new SensorDirector(sensorBuilder);
+            Sensor sensor = sensorDirector.manufactureSensor();
+            newSystemSensors.add(sensor);
+        }
+        if (noiseCheckBox.isSelected()) {
+            SensorBuilder sensorBuilder = new NoiseSensorBuilder();
+            SensorDirector sensorDirector = new SensorDirector(sensorBuilder);
+            Sensor sensor = sensorDirector.manufactureSensor();
+            newSystemSensors.add(sensor);
+        }
+        if (temperatureCheckBox.isSelected()) {
+            SensorBuilder sensorBuilder = new TemperatureSensorBuilder();
+            SensorDirector sensorDirector = new SensorDirector(sensorBuilder);
+            Sensor sensor = sensorDirector.manufactureSensor();
+            newSystemSensors.add(sensor);
+        }
+
+        systemm.setSensors(newSystemSensors);
+        systems.add(systemm);
+        updateMeasurements();
     }
 
     // создание дерева
@@ -79,6 +161,21 @@ public class MainController {
                 TreeItem<String> measurementLeaf = new TreeItem<>("Показания : " + sensor.getMeasurement());
                 sensorItem.getChildren().add(measurementLeaf);
             }
+
+            // Проверка на внештатные ситуации
+            ArrayList<Sensor> badSensors;
+            badSensors = checker.checkOperationAbility(systemm.getSensors());
+            if (badSensors != null) {
+                if (!badSensors.toString().equals("[]")) {alert(systemm.getSystemName() + badSensors.toString());}
+                File file = new File(path);
+                try {
+                    dataSaver.saveReport(systems, file);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                systemStatusLabel.setText("Внештатная ситуация. Отчет сохранен");
+            }
+
         }
         tree.setRoot(rootItem);
     }
@@ -93,18 +190,6 @@ public class MainController {
         if (gasSystem != null) {
             systems.add(gasSystem);
         }
-        ArrayList<Sensor> badSensors1;
-        badSensors1 = checker.checkOperationAbility(gasSystem.getSensors());
-        if (badSensors1 != null) {
-            if (!badSensors1.toString().equals("[]")) {alert(gasSystem.getSystemName() + badSensors1.toString());}
-            File file = new File(path);
-            try {
-                dataSaver.saveReport(systems, file);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            systemStatusLabel.setText("Внештатная ситуация. Отчет сохранен");
-        }
 
         // создание котла
         SystemBuilder boilerSystemBuilder = new BoilerSystemBuilder();
@@ -112,18 +197,6 @@ public class MainController {
         Systemm boilerSystem = boilerSystemDirector.manufactureSystem();
         if (boilerSystem != null) {
             systems.add(boilerSystem);
-        }
-        ArrayList<Sensor> badSensors2;
-        badSensors2 = checker.checkOperationAbility(boilerSystem.getSensors());
-        if (badSensors2 != null) {
-            if (!badSensors1.toString().equals("[]")) {alert(boilerSystem.getSystemName() + badSensors1.toString());}
-            File file = new File(path);
-            try {
-                dataSaver.saveReport(systems, file);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            systemStatusLabel.setText("Внештатная ситуация. Отчет сохранен");
         }
 
         // создание насоса
@@ -133,18 +206,6 @@ public class MainController {
         if (pumpSystem != null) {
             systems.add(pumpSystem);
         }
-        ArrayList<Sensor> badSensors3;
-        badSensors3 = checker.checkOperationAbility(pumpSystem.getSensors());
-        if (badSensors3 != null) {
-            if (!badSensors3.toString().equals("[]")) {alert(pumpSystem.getSystemName() + badSensors3.toString());}
-            File file = new File(path);
-            try {
-                dataSaver.saveReport(systems, file);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            systemStatusLabel.setText("Внештатная ситуация. Отчет сохранен");
-        }
 
         // создание кондиционера
         SystemBuilder conditionerSystemBuilder = new ConditionerSystemBuilder();
@@ -152,18 +213,6 @@ public class MainController {
         Systemm conditionerSystem = conditionerSystemDirector.manufactureSystem();
         if (conditionerSystem != null) {
             systems.add(conditionerSystem);
-        }
-        ArrayList<Sensor> badSensors4;
-        badSensors4 = checker.checkOperationAbility(conditionerSystem.getSensors());
-        if (badSensors4 != null) {
-            if (!badSensors4.toString().equals("[]")) {alert(conditionerSystem.getSystemName() + badSensors4.toString());}
-            File file = new File(path);
-            try {
-                dataSaver.saveReport(systems, file);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            systemStatusLabel.setText("Внештатная ситуация. Отчет сохранен");
         }
 
         // создание транфсорматора
@@ -173,18 +222,6 @@ public class MainController {
         if (transformationSystem != null) {
             systems.add(transformationSystem);
         }
-        ArrayList<Sensor> badSensors5;
-        badSensors5 = checker.checkOperationAbility(transformationSystem.getSensors());
-        if (badSensors5 != null) {
-            if (!badSensors5.toString().equals("[]")) {alert(transformationSystem.getSystemName() + badSensors5.toString());}
-            File file = new File(path);
-            try {
-                dataSaver.saveReport(systems, file);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            systemStatusLabel.setText("Внештатная ситуация. Отчет сохранен");
-        }
 
         // создание отопления
         SystemBuilder heatingSystemBuilder = new HeatingSystemBuilder();
@@ -192,18 +229,6 @@ public class MainController {
         Systemm heatingSystem = heatingSystemDirector.manufactureSystem();
         if (heatingSystem != null) {
             systems.add(heatingSystem);
-        }
-        ArrayList<Sensor> badSensors6;
-        badSensors6 = checker.checkOperationAbility(heatingSystem.getSensors());
-        if (badSensors6 != null) {
-            if (!badSensors6.toString().equals("")) {alert(badSensors6.toString());}
-            File file = new File(path);
-            try {
-                dataSaver.saveReport(systems, file);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            systemStatusLabel.setText("Внештатная ситуация. Отчет сохранен");
         }
 
         return systems;

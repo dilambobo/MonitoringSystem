@@ -16,6 +16,10 @@ public class Systemm {
         this.sensors = sensors;
     }
 
+    public Systemm(String name) {
+        this.systemName = name;
+    }
+
     // здесь нужно будет еще добавить проверку на isSystemOk и сенсоры
     public boolean qualityCheck() {
         return (systemName != null);

@@ -3,20 +3,22 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="503.0" prefWidth="635.0"
-            xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.monitoringsystem.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="503.0" prefWidth="833.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.monitoringsystem.MainController">
     <children>
         <TreeView fx:id="tree" layoutX="34.0" layoutY="34.0" prefHeight="383.0" prefWidth="364.0" />
-        <Button fx:id="getDataButton" layoutX="418.0" layoutY="54.0"
-                mnemonicParsing="false"
-                onAction="#getMeasurements"
-                prefHeight="35.0" prefWidth="188.0" text="Получить данные" />
-        <Button fx:id="saveDataButton" layoutX="418.0" layoutY="122.0"
-                mnemonicParsing="false" prefHeight="35.0"
-                prefWidth="188.0" text="Сохранить отчет"
-                onAction="#saveDataReport"/>
+        <Button fx:id="getDataButton" layoutX="418.0" layoutY="54.0" mnemonicParsing="false" onAction="#getMeasurements" prefHeight="35.0" prefWidth="128.0" text="Получить данные" />
+        <Button fx:id="saveDataButton" layoutX="418.0" layoutY="122.0" mnemonicParsing="false" onAction="#saveDataReport" prefHeight="35.0" prefWidth="128.0" text="Сохранить отчет" />
         <Label fx:id="systemStatusLabel" layoutX="70.0" layoutY="437.0" prefHeight="35.0" prefWidth="292.0" />
-      <Button layoutX="485.0" layoutY="238.0" mnemonicParsing="false" text="Button" onAction="#test" />
+      <Button fx:id="addSystemButton" layoutX="639.0" layoutY="360.0" mnemonicParsing="false" onAction="#addSystem" prefHeight="35.0" prefWidth="128.0" text="Добавить систему" />
+      <Button fx:id="updateDataButton" layoutX="418.0" layoutY="184.0" mnemonicParsing="false" onAction="#updateMeasurements" prefHeight="35.0" prefWidth="128.0" text="Обновить данные" />
+      <Label layoutX="644.0" layoutY="40.0" prefHeight="17.0" prefWidth="128.0" text="Новая система" />
+        <TextField fx:id="systemNameTextField" layoutX="600.0" layoutY="80.0" prefHeight="35.0" prefWidth="180.0" text=""/>
+        <CheckBox fx:id="gasCheckBox" layoutX="610.0" layoutY="140.0" text="Датчик газа"/>
+        <CheckBox fx:id="energyCheckBox" layoutX="610.0" layoutY="170.0" text="Датчик энергопотребления"/>
+        <CheckBox fx:id="pressureCheckBox" layoutX="610.0" layoutY="200.0" text="Датчик давления"/>
+        <CheckBox fx:id="vibrationCheckBox" layoutX="610.0" layoutY="230.0" text="Датчик вибрации"/>
+        <CheckBox fx:id="humidityCheckBox" layoutX="610.0" layoutY="260.0" text="Датчик влажности"/>
+        <CheckBox fx:id="noiseCheckBox" layoutX="610.0" layoutY="290.0" text="Датчик шума"/>
+        <CheckBox fx:id="temperatureCheckBox" layoutX="610.0" layoutY="320.0" text="Датчик температуры"/>
     </children>
 </AnchorPane>
