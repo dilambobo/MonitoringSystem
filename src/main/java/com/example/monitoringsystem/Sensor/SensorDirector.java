@@ -13,6 +13,6 @@ public class SensorDirector {
     }
 
     public Sensor manufactureSensor() {
-        return sensorBuilder.fixSensorName().fixOperationAbility().fixMeasurement().build();
+        return sensorBuilder.fixSensorName().fixMeasurement().fixOperationAbility().build();
     }
 }

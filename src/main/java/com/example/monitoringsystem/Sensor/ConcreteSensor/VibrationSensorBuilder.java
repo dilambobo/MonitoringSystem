@@ -14,13 +14,16 @@ public class VibrationSensorBuilder implements SensorBuilder {
 
     @Override
     public SensorBuilder fixSensorName() {
-        this.sensorName = "Датчик потребления энергии";
+        this.sensorName = "Датчик вибрации";
         return this;
     }
 
     @Override
     public SensorBuilder fixOperationAbility() {
-        this.operationAbility = operationAbility;
+        if (measurement > 180 || measurement < 140) {
+        this.operationAbility = false;
+        }
+        else { this.operationAbility = true; }
         // здесь должна быть провера на исправность (или утечку)
         return this;
     }

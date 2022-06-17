@@ -4,9 +4,9 @@ public interface SensorBuilder {
 
     SensorBuilder fixSensorName();
 
-    SensorBuilder fixOperationAbility();
-
     SensorBuilder fixMeasurement();
+
+    SensorBuilder fixOperationAbility();
 
     Sensor build();
 }

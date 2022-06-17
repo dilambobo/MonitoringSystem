@@ -22,7 +22,10 @@ public class EnergyConsumptionSensorBuilder implements SensorBuilder {
 
     @Override
     public SensorBuilder fixOperationAbility() {
-        this.operationAbility = operationAbility;
+        if (measurement > 320 || measurement < 280) {
+            this.operationAbility = false;
+        }
+        else { this.operationAbility = true; }
         // здесь должна быть провера на исправность (или утечку)
         return this;
     }

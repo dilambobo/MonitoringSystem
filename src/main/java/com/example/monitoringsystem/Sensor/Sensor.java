@@ -29,6 +29,11 @@ public class Sensor {
         return operationAbility;
     }
 
+    public String getOperationAbility() {
+        if (operationAbility) {return "В порядке";}
+        else {return "Проблемы";}
+    }
+
     public void setOperationAbility(boolean operationAbility) {
         this.operationAbility = operationAbility;
     }

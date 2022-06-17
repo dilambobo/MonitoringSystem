@@ -20,7 +20,10 @@ public class NoiseSensorBuilder implements SensorBuilder {
 
     @Override
     public SensorBuilder fixOperationAbility() {
-        this.operationAbility = operationAbility;
+        if (measurement > 70 || measurement < 40) {
+            this.operationAbility = false;
+        }
+        else { this.operationAbility = true; }
         // здесь должна быть провера на исправность (или утечку)
         return this;
     }

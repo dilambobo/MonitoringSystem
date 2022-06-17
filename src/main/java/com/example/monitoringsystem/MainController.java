@@ -7,10 +7,7 @@ import com.example.monitoringsystem.System.Systemm;
 import com.example.monitoringsystem.System.SystemBuilder;
 import com.example.monitoringsystem.System.SystemDirector;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -135,5 +132,13 @@ public class MainController {
         }
 
         return systems;
+    }
+
+    void error(Exception e) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(e.getMessage());
+        alert.showAndWait();
     }
 }

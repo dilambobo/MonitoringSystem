@@ -20,7 +20,10 @@ public class HumiditySensorBuilder implements SensorBuilder {
 
     @Override
     public SensorBuilder fixOperationAbility() {
-        this.operationAbility = operationAbility;
+        if (measurement > 220 || measurement < 180) {
+            this.operationAbility = false;
+        }
+        else { this.operationAbility = true; }
         // здесь должна быть провера на исправность (или утечку)
         return this;
     }
@@ -28,6 +31,7 @@ public class HumiditySensorBuilder implements SensorBuilder {
     @Override
     public SensorBuilder fixMeasurement() {
         measurement = spinner.normalDeviation(200);
+
         this.measurement = measurement;
         return this;
     }
