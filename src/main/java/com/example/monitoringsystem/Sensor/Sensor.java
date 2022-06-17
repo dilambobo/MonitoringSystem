@@ -45,4 +45,8 @@ public class Sensor {
     public void setMeasurement(double measurement) {
         this.measurement = measurement;
     }
+
+    public String toString() {
+        return "У " + this.getSensorName() + " показания " + this.measurement;
+    }
 }

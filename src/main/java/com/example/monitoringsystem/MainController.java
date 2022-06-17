@@ -1,6 +1,7 @@
 package com.example.monitoringsystem;
 
 import com.example.monitoringsystem.Report.DataSaver;
+import com.example.monitoringsystem.Sensor.Control.Checker;
 import com.example.monitoringsystem.Sensor.Sensor;
 import com.example.monitoringsystem.System.ConcreteSystem.*;
 import com.example.monitoringsystem.System.Systemm;
@@ -18,6 +19,8 @@ public class MainController {
 
     ArrayList<Systemm> systems = new ArrayList<>();
     DataSaver dataSaver = new DataSaver();
+    Checker checker = new Checker();
+    String path = "";
 
     @FXML
     private Label systemStatusLabel;
@@ -90,6 +93,18 @@ public class MainController {
         if (gasSystem != null) {
             systems.add(gasSystem);
         }
+        ArrayList<Sensor> badSensors1;
+        badSensors1 = checker.checkOperationAbility(gasSystem.getSensors());
+        if (badSensors1 != null) {
+            alert(badSensors1.toString());
+            File file = new File(path);
+            try {
+                dataSaver.saveReport(systems, file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            systemStatusLabel.setText("Внештатная ситуация. Отчет сохранен");
+        }
 
         // создание котла
         SystemBuilder boilerSystemBuilder = new BoilerSystemBuilder();
@@ -97,6 +112,18 @@ public class MainController {
         Systemm boilerSystem = boilerSystemDirector.manufactureSystem();
         if (boilerSystem != null) {
             systems.add(boilerSystem);
+        }
+        ArrayList<Sensor> badSensors2;
+        badSensors2 = checker.checkOperationAbility(boilerSystem.getSensors());
+        if (badSensors2 != null) {
+            alert(badSensors2.toString());
+            File file = new File(path);
+            try {
+                dataSaver.saveReport(systems, file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            systemStatusLabel.setText("Внештатная ситуация. Отчет сохранен");
         }
 
         // создание насоса
@@ -106,6 +133,18 @@ public class MainController {
         if (pumpSystem != null) {
             systems.add(pumpSystem);
         }
+        ArrayList<Sensor> badSensors3;
+        badSensors3 = checker.checkOperationAbility(pumpSystem.getSensors());
+        if (badSensors3 != null) {
+            alert(badSensors3.toString());
+            File file = new File(path);
+            try {
+                dataSaver.saveReport(systems, file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            systemStatusLabel.setText("Внештатная ситуация. Отчет сохранен");
+        }
 
         // создание кондиционера
         SystemBuilder conditionerSystemBuilder = new ConditionerSystemBuilder();
@@ -113,6 +152,18 @@ public class MainController {
         Systemm conditionerSystem = conditionerSystemDirector.manufactureSystem();
         if (conditionerSystem != null) {
             systems.add(conditionerSystem);
+        }
+        ArrayList<Sensor> badSensors4;
+        badSensors4 = checker.checkOperationAbility(conditionerSystem.getSensors());
+        if (badSensors4 != null) {
+            alert(badSensors4.toString());
+            File file = new File(path);
+            try {
+                dataSaver.saveReport(systems, file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            systemStatusLabel.setText("Внештатная ситуация. Отчет сохранен");
         }
 
         // создание транфсорматора
@@ -122,6 +173,18 @@ public class MainController {
         if (transformationSystem != null) {
             systems.add(transformationSystem);
         }
+        ArrayList<Sensor> badSensors5;
+        badSensors5 = checker.checkOperationAbility(transformationSystem.getSensors());
+        if (badSensors5 != null) {
+            alert(badSensors5.toString());
+            File file = new File(path);
+            try {
+                dataSaver.saveReport(systems, file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            systemStatusLabel.setText("Внештатная ситуация. Отчет сохранен");
+        }
 
         // создание отопления
         SystemBuilder heatingSystemBuilder = new HeatingSystemBuilder();
@@ -129,6 +192,18 @@ public class MainController {
         Systemm heatingSystem = heatingSystemDirector.manufactureSystem();
         if (heatingSystem != null) {
             systems.add(heatingSystem);
+        }
+        ArrayList<Sensor> badSensors6;
+        badSensors6 = checker.checkOperationAbility(heatingSystem.getSensors());
+        if (badSensors6 != null) {
+            alert(badSensors6.toString());
+            File file = new File(path);
+            try {
+                dataSaver.saveReport(systems, file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            systemStatusLabel.setText("Внештатная ситуация. Отчет сохранен");
         }
 
         return systems;
@@ -139,6 +214,14 @@ public class MainController {
         alert.setTitle("Error");
         alert.setHeaderText(null);
         alert.setContentText(e.getMessage());
+        alert.showAndWait();
+    }
+
+    void alert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Беспредел!");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
         alert.showAndWait();
     }
 }
